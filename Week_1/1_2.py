@@ -8,26 +8,26 @@ def read_file(filename):
 
 
 def counter_return(words_list):
-    words_list_Counter = []
+    words_list_counter = []
     for tmp in words_list:
-        Counter = collections.Counter(tmp.replace( '\n' , '' ))
-        words_list_Counter.append(Counter)
-    return words_list_Counter
+        counter = collections.Counter(tmp.replace( '\n' , '' ))
+        words_list_counter.append(counter)
+    return words_list_counter
 
 
 def words_list_sort(words_list):
     return sorted(words_list, key=score_calculation, reverse=True)
 
 
-def anagram_return(words_list, words_list_Counter, Give_word):
-    Give_word_Counter = collections.Counter(Give_word)
+def anagram_return(words_list, words_list_counter, give_word):
+    give_word_counter = collections.Counter(give_word)
     result = []
 
     #  スコアが高い順にソートされているので, 初めに見つけたアナグラムが一番スコアが高い
-    for i, each_words_list_Counter in enumerate(words_list_Counter):
+    for i, words_list_counter_key in enumerate(words_list_counter):
         flag = 1
-        for key in each_words_list_Counter:
-            if int(Give_word_Counter[key]) < int(each_words_list_Counter[key]):
+        for key in words_list_counter_key:
+            if int(give_word_counter[key]) < int(words_list_counter_key[key]):
                 flag = 0
                 break
         if flag:
@@ -50,13 +50,13 @@ def score_calculation(word):
     return score
 
 
-def output_file(words_list, words_list_Counter, input_filename, output_filename):
+def output_file(words_list, words_list_counter, input_filename, output_filename):
     input_list = read_file(input_filename)
     f = open(output_filename, 'w', encoding='UTF-8')
     result = []
     for input_list_word in input_list:
         input_list_word = input_list_word.replace('\n', '' )
-        anagram = anagram_return(words_list, words_list_Counter, input_list_word)
+        anagram = anagram_return(words_list, words_list_counter, input_list_word)
         result.append(anagram + '\n')
     f.writelines(result)
     f.close()
@@ -65,10 +65,10 @@ def output_file(words_list, words_list_Counter, input_filename, output_filename)
 
 #  Input Dictionary File, Score's Order
 words_list = words_list_sort(read_file('words.txt'))
-words_list_Counter = counter_return(words_list)
+words_list_counter = counter_return(words_list)
 
 
 #  Output
-output_file(words_list, words_list_Counter, 'small.txt', 'small_answer.txt')
-output_file(words_list, words_list_Counter, 'medium.txt', 'medium_answer.txt')
-output_file(words_list, words_list_Counter, 'medium.txt', 'large_answer.txt')
+output_file(words_list, words_list_counter, 'small.txt', 'small_answer.txt')
+output_file(words_list, words_list_counter, 'medium.txt', 'medium_answer.txt')
+output_file(words_list, words_list_counter, 'large.txt', 'large_answer.txt')
