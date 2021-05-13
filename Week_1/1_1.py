@@ -1,11 +1,11 @@
 import collections
 
 def anagram_arr(words_list, give_word):
-    tmp = collections.Counter(give_word)
+    give_word_counter = collections.Counter(give_word)
     result = []
     for word in words_list:
-        word_tmp = collections.Counter(word)
-        if word_tmp == tmp:
+        word = word.replace( '\n' , '' )
+        if give_word_counter == collections.Counter(word):
             result.append(word.replace( '\n' , '' ))
     if result == []:
         return 'WE CAN NOT FIND THE ANAGRAM WORD !'
