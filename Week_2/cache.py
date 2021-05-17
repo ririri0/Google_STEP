@@ -70,6 +70,7 @@ class Cache:
             # exception handling
             pass
         else:
+            # Store in hash table
             self.hash_table[url] = {}
             self.hash_table[url]["Web_page"] = contents
             self.hash_table[url]["prev_URL"] = self.top_url
