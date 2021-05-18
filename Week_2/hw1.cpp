@@ -62,8 +62,7 @@ int main() {
     cout << "WE CANNOT CALCULATE!" << endl;
     return 0;
   }
-
-  /*配列はメモリが大きくなることが多いので、N以外は値渡しでなく参照渡しを基本とすることで確保メモリ削減*/
+  
 
   // Create matrix1
   int* matrix1 = (int*)malloc(N * N * sizeof(int));
