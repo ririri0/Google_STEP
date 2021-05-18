@@ -11,6 +11,7 @@ class Cache:
   # Initializes the cache.
   # |n|: The size of the cache.
     def __init__(self, n):
+        # self.hash_table[url] = {"Web_page": value1, "prev_URL":valu2, "next_URL":value3}
         self.hash_table = {}
         self.n = n
         # Top is most recently.
