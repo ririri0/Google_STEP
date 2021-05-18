@@ -40,10 +40,7 @@ class Cache:
 
 
     def non_hit_cache(self, url, contents):
-        if self.hash_table == {}:
-            # Nothing in the cache
-            self.insert_top(url, contents)
-        elif len(self.hash_table) < self.n:
+        if len(self.hash_table) < self.n:
             # When the cache capacity is not exceeded
             self.insert_top(url, contents)
         else:
