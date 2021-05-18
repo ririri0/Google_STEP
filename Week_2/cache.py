@@ -48,8 +48,9 @@ class Cache:
             self.insert_top(url, contents)
         else:
             # When the cache is full
-            self.insert_top(url, contents)
             self.delete_bottom()
+            self.insert_top(url, contents)
+
 
 
     def remove_from_list(self, url, contents):
