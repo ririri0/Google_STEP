@@ -53,6 +53,8 @@ class Cache:
     def remove_from_list(self, url, contents):
         if self.hash_table[url] == None:
             # Exception handling
+            print("URL does NOT exist in the list.")
+            exit(1)
             pass
         elif url == self.bottom_url:
             self.delete_bottom()
@@ -66,14 +68,10 @@ class Cache:
 
     def insert_top(self, url, contents):
         if self.top_url == url:
-            # exception handling
             pass
         else:
             # Store in hash table
-            self.hash_table[url] = {}
-            self.hash_table[url]["Web_page"] = contents
-            self.hash_table[url]["prev_URL"] = self.top_url
-            self.hash_table[url]["next_URL"] = None
+            self.hash_table[url] = {"Web_page": contents, "prev_URL":self.top_url, "next_URL":None}
             if self.top_url == None:
                 # Change retained variables
                 self.top_url = url

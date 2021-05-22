@@ -21,11 +21,10 @@ void initialize_matrix(int N, int* matrix) {
 
 // Store random values less than 10 in a matrix
 void random_matrix_under10(int N, int* matrix) {
-  // If the execution time is different, the calculated value will be different.
-  srand((unsigned)time(NULL));
+  std::random_device rand_d;
   for (int i = 0; i < N; i++) {
     for (int m = 0; m < N; m++) {
-      matrix[i * m + m] = rand() % 10;
+      matrix[i * N + m] = rand_d() % 10;
     }
   }
 }
@@ -90,11 +89,12 @@ int main() {
   double execution_time = end_time - begin_time;
   std::cout << execution_time;
 
-  /* debug
-    print_matrix(N, matrix1);
-    print_matrix(N, matrix2);
-    print_matrix(N, result);
-    */
+/*  debug
+  print_matrix(N, matrix1);
+  print_matrix(N, matrix2);
+  print_matrix(N, result);
+*/
+    
 
   free(matrix1);
   free(matrix2);

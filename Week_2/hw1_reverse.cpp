@@ -21,11 +21,10 @@ void initialize_matrix(int N, int* matrix) {
 
 // Store random values less than 10 in a matrix
 void random_matrix_under10(int N, int* matrix) {
-  // If the execution time is different, the calculated value will be different.
-  srand((unsigned)time(NULL));
+  std::random_device rand_d;
   for (int i = 0; i < N; i++) {
     for (int m = 0; m < N; m++) {
-      matrix[i * m + m] = rand() % 10;
+      matrix[i * N + m] = rand_d() % 10;
     }
   }
 }
@@ -39,14 +38,15 @@ void matrix_multiplication(int N, int* matrix1, int* matrix2, int* result) {
     result = nullptr;
   }
 
-  for (int i = 0; i < N; i++) {
+  for (int k = 0; k < N; k++) {
     for (int m = 0; m < N; m++) {
-      for (int k = 0; k < N; k++) {
-        result[m * N + i] += matrix1[k * N + i] * matrix2[m * N + k];
+      for (int i = 0; i < N; i++) {
+        result[i * N + m] += matrix1[i * N + k] * matrix2[k * N + m];
       }
     }
   }
 }
+
 
 void print_matrix(int N, int* matrix) {
   for (int i = 0; i < N * N; i++) {
@@ -82,6 +82,7 @@ int main() {
 
   //  Calculation
   matrix_multiplication(N, matrix1, matrix2, result);
+  //multiply_normal(N, matrix1, matrix2, result);
 
   // Get the time after calculation
   double end_time = get_time();
@@ -90,11 +91,12 @@ int main() {
   double execution_time = end_time - begin_time;
   std::cout << execution_time;
 
-  /*
-     print_matrix(N, matrix1);
-     print_matrix(N, matrix2);
-     print_matrix(N, result);
-     */
+/* debug 
+  print_matrix(N, matrix1);
+  print_matrix(N, matrix2);
+  print_matrix(N, result);
+*/
+     
 
   free(matrix1);
   free(matrix2);
