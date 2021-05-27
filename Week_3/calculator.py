@@ -111,6 +111,7 @@ def remove_parentheses(tokens):
                 print('Syntax Error Due to Parentheses')
                 exit(1)
             else:
+                # Calculate inside parentheses recursively
                 tokenize_tokens = tokenize(
                     str(evaluate(inside_parentheses_tokens)))
                 if result_tokens == []:
