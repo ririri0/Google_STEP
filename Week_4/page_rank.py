@@ -1,13 +1,13 @@
 def ReadPages(pages):
-    with open('data/pages_small.txt') as f:
+    with open('data/pages.txt') as f:
         for data in f.read().splitlines():
             page = data.split('\t')
             # page[0]: id, page[1]: title
-            pages[page[0]] = {'title': page[1], 'score': 100}
+            pages[page[0]] = page[1]
 
 
 def ReadLinks(links):
-    with open('data/links_small.txt') as f:
+    with open('data/links.txt') as f:
         for data in f.read().splitlines():
             link = data.split('\t')
             # link[0]: id (from), links[1]: id (to)
@@ -28,15 +28,15 @@ def isInt(s):
 
 def AddScore(pages, links, score_list):
     new_score_list = {}
-    for id in pages:
-        if id in links:
-            add_score = score_list[id] / len(links[id])
-            for each_id in links[id]:
-                if each_id in new_score_list:
-                    new_score_list[each_id] += add_score
-                else:
-                    new_score_list[each_id] = add_score
-    # No Link Pages
+    for id in links:
+        # Add equal score
+        add_score = score_list[id] / len(links[id])
+        for each_id in links[id]:
+            if each_id in new_score_list:
+                new_score_list[each_id] += add_score
+            else:
+                new_score_list[each_id] = add_score
+    # Titles that no one have their link have score 0
     for id in pages:
         if id not in new_score_list:
             new_score_list[id] = 0
@@ -49,7 +49,7 @@ def InitScoreList(score_list, pages, init_score):
 
 
 def PageRank(pages, links, times, init_score):
-    # Initialize
+    # Set initial value
     score_list = {}
     InitScoreList(score_list, pages, init_score)
 
@@ -63,29 +63,24 @@ def PrintPageRank(result, pages, output_count):
     result_sorted = sorted(result.items(), key=lambda x: x[1], reverse=True)
     if output_count == 'ALL':
         output_count = len(result_sorted)
-
     elif isInt(output_count):
         output_count = int(output_count)
-        print("\nRanking, ID, Title, Score")
-        count = 1
-        for id, score in result_sorted:
-            print('{0}, {1}, {2}, {3:.3f}, '.format(
-                count, id, pages[id]['title'], score))
-            if count == output_count:
-                break
-            count += 1
     else:
         print("Please Enter the Correct Value")
         exit(1)
 
+    # Output
+    print("\nRanking, ID, Title, Score")
+    count = 1
+    for id, score in result_sorted:
+        print('{0}, {1}, {2}, {3:.3f}, '.format(
+            count, id, pages[id], score))
+        if count == output_count:
+            break
+        count += 1
+
 
 def main():
-    # Read Data
-    pages = {}
-    links = {}
-    ReadPages(pages)
-    ReadLinks(links)
-
     # User Input
     print('Times > ', end="")
     times = int(input())
@@ -93,6 +88,12 @@ def main():
     init_score = int(input())
     print('Number of outputs > ', end="")
     output_count = input()
+
+    # Read Data
+    pages = {}
+    links = {}
+    ReadPages(pages)
+    ReadLinks(links)
 
     # Output Result
     result = PageRank(pages, links, times, init_score)
