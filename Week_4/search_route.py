@@ -58,7 +58,7 @@ def SearchID(find_title, pages):
     exit(1)
 
 
-def SearchRoot(start_title, destination_title, pages, links):
+def SearchRoute(start_title, destination_title, pages, links):
     # Search IDs
     start_id = SearchID(start_title, pages)
     destination_id = SearchID(destination_title, pages)
@@ -115,7 +115,7 @@ def main():
     LoadLinks(links)
 
     # Outout the result
-    result = SearchRoot(start_title, destination_title, pages, links)
+    result = SearchRoute(start_title, destination_title, pages, links)
     PrintList(result, pages)
 
 
