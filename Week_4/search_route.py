@@ -10,7 +10,7 @@ class Queue:
         self.queue.append(data)
 
     def deq(self):
-        if self.queue == {}:
+        if self.queue == []:
             return False
         else:
             data = self.queue[0]
